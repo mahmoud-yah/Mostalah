@@ -20,99 +20,116 @@ class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: isSearch
-            ? AppBar(
-                // backgroundColor: Theme.of(context).primaryColor,
-          backgroundColor: Theme.of(context).primaryColor,
-                actions: [
-                  IconButton(
-                    onPressed: () {
+      appBar: isSearch
+          ? AppBar(
+              // backgroundColor: Theme.of(context).primaryColor,
+              backgroundColor: Theme.of(context).primaryColor,
+              actions: [
+                IconButton(
+                  onPressed: () {
+                    setState(() {
+                      isSearch = false;
+                      termsToShow = allTerms;
+                    });
+                  },
+                  icon: const Icon(Icons.arrow_back),
+                ),
+                Expanded(
+                  child: TextField(
+                    // ignore: prefer_const_constructors
+                    style: TextStyle(color: Colors.white70),
+                    decoration: const InputDecoration(
+                        hintText: 'ابحث...',
+                        hintStyle: TextStyle(color: Colors.white70),
+                        border: InputBorder.none),
+                    onChanged: (text) {
+                      text = text.toLowerCase();
                       setState(() {
-                        isSearch = false;
-                        termsToShow = allTerms;
+                        termsToShow = allTerms.where((element) {
+                          var elementTitle = element.syrianTerm.toLowerCase();
+                          return elementTitle.contains(text);
+                        }).toList();
                       });
                     },
-                    icon: const Icon(Icons.arrow_back),
                   ),
-                  Expanded(
-                    child: TextField(
-                      // ignore: prefer_const_constructors
-                      style: TextStyle(color: Colors.white70),
-                      decoration: const InputDecoration(
-                          hintText: 'ابحث...',
-                          hintStyle: TextStyle(color: Colors.white70),
-                          border: InputBorder.none),
-                      onChanged: (text) {
-                        text = text.toLowerCase();
-                        setState(() {
-                          termsToShow = allTerms.where((element) {
-                            var elementTitle = element.syrianTerm.toLowerCase();
-                            return elementTitle.contains(text);
-                          }).toList();
-                        });
-                      },
-                    ),
-                  ),
-                ],
-              )
-            : AppBar(
-                title: Text(
-                  'Mostalah',
-                  style: GoogleFonts.parisienne(fontSize: 35),
-                ),
-                backgroundColor: Theme.of(context).primaryColor,
-                actions: [
-                  IconButton(
-                    onPressed: () {
-                      setState(() {
-                        isSearch = true;
-                      });
-                    },
-                    icon: const Icon(Icons.search),
-                  ),
-                ],
-              ),
-        body: ListView.builder(
-          itemBuilder: (BuildContext context, int index) {
-            Term term = termsToShow[index];
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                GestureDetector(
-                  behavior: HitTestBehavior.opaque,
-                  onTap: () => Get.to(TermScreen(
-                    syrianTerm: term.syrianTerm,
-                    egyptianTerm: term.egyptianTerm,
-                  )),
-                  child: Container(
-                    // color: Colors.white,
-                    margin: const EdgeInsets.all(7),
-                    padding: EdgeInsets.symmetric(
-                        horizontal: MediaQuery.of(context).size.width * 0.035),
-                    height: MediaQuery.of(context).size.height * 0.07,
-                    width: MediaQuery.of(context).size.width * 0.9,
-                    child: Row(
-                      // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      // crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          term.syrianTerm,
-                          style: const TextStyle(fontSize: 25),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                Divider(
-                  height: 0.005,
-                  // color: Colors.blueGrey,
-                  indent: MediaQuery.of(context).size.width * 0.04,
-                  endIndent: MediaQuery.of(context).size.width * 0.04,
                 ),
               ],
-            );
-          },
-          itemCount: termsToShow.length,
-        ));
+            )
+          : AppBar(
+              title: Text(
+                'Mostalah',
+                style: GoogleFonts.parisienne(fontSize: 35),
+              ),
+              backgroundColor: Theme.of(context).primaryColor,
+              actions: [
+                IconButton(
+                  onPressed: () {
+                    setState(() {
+                      isSearch = true;
+                    });
+                  },
+                  icon: const Icon(Icons.search),
+                ),
+              ],
+            ),
+      body: ListView.builder(
+        itemBuilder: (BuildContext context, int index) {
+          Term term = termsToShow[index];
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              GestureDetector(
+                behavior: HitTestBehavior.opaque,
+                onTap: () => Get.to(TermScreen(
+                  syrianTerm: term.syrianTerm,
+                  egyptianTerm: term.egyptianTerm,
+                )),
+                child: Container(
+                  // color: Colors.white,
+                  margin: const EdgeInsets.all(7),
+                  padding: EdgeInsets.symmetric(
+                      horizontal: MediaQuery.of(context).size.width * 0.035),
+                  height: MediaQuery.of(context).size.height * 0.07,
+                  // width: MediaQuery.of(context).size.width * 0.9,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    // crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        term.syrianTerm,
+                        style: const TextStyle(fontSize: 25),
+                      ),
+                      IconButton(
+                          onPressed: () {
+                            setState(() {
+                              if (term.isFavorite == true) {
+                                term.isFavorite = false;
+                              } else {
+                                term.isFavorite = true;
+                              }
+                            });
+                          },
+                          icon: term.isFavorite
+                              ? const Icon(
+                                  Icons.favorite,
+                                  color: Colors.red,
+                                )
+                              : const Icon(Icons.favorite_border)),
+                    ],
+                  ),
+                ),
+              ),
+              Divider(
+                height: 0.005,
+                // color: Colors.blueGrey,
+                indent: MediaQuery.of(context).size.width * 0.04,
+                endIndent: MediaQuery.of(context).size.width * 0.04,
+              ),
+            ],
+          );
+        },
+        itemCount: termsToShow.length,
+      ),
+    );
   }
 }

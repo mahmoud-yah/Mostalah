@@ -11,7 +11,7 @@ class NavigationScreen extends StatefulWidget {
 }
 
 class _NavigationScreenState extends State<NavigationScreen> {
-  final List<Widget> _screens = <Widget>[const MainScreen(),const AddTermsScreen(),const SettingsScreen()];
+  final List<Widget> _screens = <Widget>[const MainScreen(),const AddTermsScreen(), SettingsScreen()];
 
   int _selectedIndex = 0;
 
@@ -35,8 +35,8 @@ class _NavigationScreenState extends State<NavigationScreen> {
             icon: Icon(Icons.add_box_outlined),
           ),
           BottomNavigationBarItem(
-            label: 'الاعدادات',
-            icon: Icon(Icons.settings),
+            label: 'العناصر المحفوظة',
+            icon: Icon(Icons.favorite_border),
           ),
         ],
         // backgroundColor: Theme.of(context).primaryColor,
