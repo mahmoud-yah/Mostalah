@@ -31,6 +31,7 @@ dependencies:
     sdk: flutter
   sqflite: ^2.0.2
   path: ^1.8.0
+  path_provider:
   get: ^4.6.1
   google_fonts: ^2.2.0
   stacked_themes:

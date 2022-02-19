@@ -1,9 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:stacked_themes/stacked_themes.dart';
+import 'package:mostalah/config/database.dart';
+import 'package:mostalah/models/term.dart';
 
-class AddTermsScreen extends StatelessWidget {
+class AddTermsScreen extends StatefulWidget {
   const AddTermsScreen({Key? key}) : super(key: key);
 
+  @override
+  State<AddTermsScreen> createState() => _AddTermsScreenState();
+}
+
+TextEditingController egController = TextEditingController();
+TextEditingController syController = TextEditingController();
+
+class _AddTermsScreenState extends State<AddTermsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -15,27 +24,43 @@ class AddTermsScreen extends StatelessWidget {
       ),
       body: Column(
         children: [
-          const Padding(
-            padding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 12),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 12),
             child: TextField(
-              decoration: InputDecoration(hintText: 'أضف المصطلح السوري'),
+              controller: syController,
+              decoration: const InputDecoration(hintText: 'أضف المصطلح السوري'),
             ),
           ),
-          const Padding(
-            padding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 12),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 12),
             child: TextField(
-              decoration: InputDecoration(hintText: 'أضف المرادف المصري'),
+              controller: egController,
+              decoration: const InputDecoration(hintText: 'أضف المرادف المصري'),
             ),
           ),
           Padding(
             padding: const EdgeInsets.only(top: 8.0),
             child: ElevatedButton(
               onPressed: () {
-                // getThemeManager(context).selectThemeAtIndex(2);
-                getThemeManager(context).toggleDarkLightTheme();
+                Term term = Term(
+                  syrianTerm: syController.text,
+                  egyptianTerm: egController.text,
+                  isFavorite: true,
+                );
+                DBProvider.db.insertTerm(term);
+                egController.clear();
+                syController.clear();
+                ScaffoldMessenger.of(context).showSnackBar(
+                   SnackBar(
+                    content: const Text('تم إضافة المصطلح بنجاح!'),
+                    backgroundColor: Theme.of(context).primaryColor,
+                  ),
+                );
+                FocusScope.of(context).unfocus();
               },
               child: const Text('أضف'),
-              style: ElevatedButton.styleFrom(primary: Theme.of(context).primaryColor),
+              style: ElevatedButton.styleFrom(
+                  primary: Theme.of(context).primaryColor),
             ),
           )
         ],

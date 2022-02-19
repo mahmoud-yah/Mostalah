@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mostalah/Screens/add_terms_screen.dart';
 import 'package:mostalah/Screens/main_screen.dart';
-import 'package:mostalah/Screens/settings_screen.dart';
+import 'package:mostalah/Screens/favorites_screen.dart';
 
 class NavigationScreen extends StatefulWidget {
   const NavigationScreen({Key? key}) : super(key: key);
@@ -11,7 +11,7 @@ class NavigationScreen extends StatefulWidget {
 }
 
 class _NavigationScreenState extends State<NavigationScreen> {
-  final List<Widget> _screens = <Widget>[const MainScreen(),const AddTermsScreen(), SettingsScreen()];
+  final List<Widget> _screens = <Widget>[const MainScreen(),const AddTermsScreen(), FavoritesScreen()];
 
   int _selectedIndex = 0;
 
