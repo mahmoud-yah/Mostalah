@@ -38,7 +38,7 @@ class TermScreen extends StatelessWidget {
             child: Container(
               width: double.infinity,
               // color: Colors.yellowAccent,
-              padding: EdgeInsets.all(20),
+              padding: const EdgeInsets.all(20),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
