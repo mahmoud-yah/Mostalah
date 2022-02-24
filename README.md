@@ -1,16 +1,17 @@
-# mostalah
+# MOSTALAH
 
-A new Flutter project.
+A simple application that could make your life easier as a syrian person who just arrived to Egypt, it contains all the egyptian terms you might use in your day to day activities and their synonymous in the syrian slang.
 
-## Getting Started
+## Screenshots
 
-This project is a starting point for a Flutter application.
+<p>الصفحة الرئيسية</p>
+<img src="images/img1.jpg" height="300">
 
-A few resources to get you started if this is your first Flutter project:
+<p>صفحة شرح المصطلح</p>
+<img src="images/img2.jpg" height="300">
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+<p>صفحةاضافة مصطلح</p>
+<img src="images/img3.jpg" height="300">
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+<p>صفحة المصطلحات المحفوظة</p>
+<img src="images/img4.jpg" height="300">
