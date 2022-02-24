@@ -23,6 +23,7 @@ class TermScreen extends StatelessWidget {
             color: Theme.of(context).primaryColor,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   syrianTerm,
