@@ -23,15 +23,17 @@ class DBProvider {
     return _database;
   }
 
+  // "$idColumn INTEGER PRIMARY KEY AUTOINCREMENT,"
   initDB() async {
     Directory documentsDirectory = await getApplicationDocumentsDirectory();
     String path = join(documentsDirectory.path, "TestDB.db");
     return await openDatabase(path, version: 1, onOpen: (db) {},
         onCreate: (Database db, int version) async {
       await db.execute("CREATE TABLE $termTable ("
-          "$idColumn INTEGER PRIMARY KEY AUTOINCREMENT,"
+          "$idColumn TEXT PRIMARY KEY,"
           "$syrianTermColumn TEXT,"
           "$egyptianTermColumn TEXT,"
+          "$termDescriptionColumn TEXT,"
           "$favoriteColumn BIT"
           ")");
     });
@@ -87,13 +89,16 @@ class DBProvider {
   toggleFavorite(Term term) async {
     final db = await database;
     Term fav = Term(
-      // id: term.id,
+      id: term.id,
       egyptianTerm: term.egyptianTerm,
       syrianTerm: term.syrianTerm,
+      termDescription: term.termDescription,
       isFavorite: !term.isFavorite,
     );
+    print('isfavorite: ${fav.isFavorite}');
     var res = await db!.update(termTable, fav.toMap(),
-        where: "id = ?", whereArgs: [term.id]);
+        where: "$idColumn = ?", whereArgs: [fav.id]);
+    print('res: $res');
     return res;
   }
 
@@ -104,7 +109,6 @@ class DBProvider {
 
   deleteAll() async {
     final db = await database;
-    db!.rawDelete("Delete * from $termTable");
+    db!.rawDelete("Delete from $termTable");
   }
-
 }
